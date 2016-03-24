@@ -84,10 +84,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if section == 0 {
-            return "To Do"
+        if fetchedResultsController.sections?.count == 1 {
+            let fetchedObjects = fetchedResultsController.fetchedObjects!
+            let testTask:TaskModel = fetchedObjects[0] as! TaskModel
+            if testTask.completed == true {
+                return "Completed"
+            } else {
+                return "To Do"
+            }
+            
         } else {
-            return "Completed"
+        
+            if section == 0 {
+                return "To Do"
+            } else {
+                return "Completed"
+            }
         }
         
     }
@@ -96,7 +108,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let thisTask = fetchedResultsController.objectAtIndexPath(indexPath) as! TaskModel
         
-        if indexPath.section == 0 {
+        if thisTask.completed == false {
         
             thisTask.completed = true
         } else {
